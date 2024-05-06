@@ -12,7 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DoneIcon from "@mui/icons-material/Done";
 import { useState } from "react";
 
-const Note = ({ item }) => {
+const Note = ({ item, onDelete }) => {
   const [edit, setEdit] = useState(false);
   const editOn = `${edit ? "inline-blcok" : "none"}`;
   const editOff = `${edit ? "none" : "inline-blcok"}`;
@@ -24,6 +24,12 @@ const Note = ({ item }) => {
   const handleUpdateTitle = () => {
     item.title = noteTitle; // Asignar el nuevo título
     toggleEdit(); // Salir del modo de edición
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(item.id); // Llama a la función de eliminar pasando el ID de la nota
+    }
   };
 
   return (
@@ -78,6 +84,7 @@ const Note = ({ item }) => {
             sx={{ display: editOff }}
             type="button"
             aria-label="search"
+            onClick={handleDelete}
           >
             <DeleteIcon />
           </IconButton>

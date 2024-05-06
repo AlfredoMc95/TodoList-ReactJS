@@ -6,7 +6,11 @@ import { useContext } from "react";
 import { ItemsContext } from "../../Context/ItemsContext";
 
 const NotesContainer = () => {
-  const [todos] = useContext(ItemsContext);
+  const [todos, setTodos] = useContext(ItemsContext);
+
+  const onDelete = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id)); // Filtra la lista para excluir el elemento con el ID dado
+  };
 
   return (
     <>
@@ -39,7 +43,7 @@ const NotesContainer = () => {
           }}
         >
           {todos.map((todo) => (
-            <Note key={todo.id} item={todo} />
+            <Note key={todo.id} item={todo} onDelete={onDelete} />
           ))}
         </Box>
       </Paper>
