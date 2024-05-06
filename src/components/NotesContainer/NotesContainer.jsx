@@ -2,8 +2,12 @@ import { Box, Paper } from "@mui/material";
 import { bgColor1, bgColor2, bgColor3 } from "../../constants/colors";
 import Note from "../Note/Note";
 import AddNote from "../addNote/AddNote";
+import { useContext } from "react";
+import { ItemsContext } from "../../Context/ItemsContext";
 
 const NotesContainer = () => {
+  const [todos] = useContext(ItemsContext);
+
   return (
     <>
       <Paper
@@ -34,16 +38,9 @@ const NotesContainer = () => {
             },
           }}
         >
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
-          <Note />
+          {todos.map((todo) => (
+            <Note key={todo.id} item={todo} />
+          ))}
         </Box>
       </Paper>
     </>

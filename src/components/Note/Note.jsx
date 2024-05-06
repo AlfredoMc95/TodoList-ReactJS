@@ -12,10 +12,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DoneIcon from "@mui/icons-material/Done";
 import { useState } from "react";
 
-const Note = () => {
+const Note = ({ item }) => {
   const [edit, setEdit] = useState(false);
   const editOn = `${edit ? "inline-blcok" : "none"}`;
   const editOff = `${edit ? "none" : "inline-blcok"}`;
+
+  const [noteTitle, setNoteTitle] = useState(item.title || "");
+
+  const toggleEdit = () => setEdit((prevEdit) => !prevEdit);
+
+  const handleUpdateTitle = () => {
+    item.title = noteTitle; // Asignar el nuevo título
+    toggleEdit(); // Salir del modo de edición
+  };
 
   return (
     <>
@@ -36,23 +45,24 @@ const Note = () => {
               color: "gray",
             },
           }}
+          checked={item.completed}
         />
-        <Typography sx={{ display: editOff }}>Texto</Typography>
+        <Typography sx={{ display: editOff }}>{item.title}</Typography>
         <TextField
           sx={{ display: editOn, width: "100%" }}
           name="text"
-          placeholder="Add a note"
-          required
+          placeholder=""
           type="text"
           variant="filled"
-          //value={email}
-          //onChange={(e) => setEmail(e.target.value)}
+          value={noteTitle}
+          onChange={(e) => setNoteTitle(e.target.value)}
         />
         <Box>
           <IconButton
             sx={{ display: editOn }}
             type="button"
             aria-label="search"
+            onClick={handleUpdateTitle}
           >
             <DoneIcon />
           </IconButton>
@@ -60,6 +70,7 @@ const Note = () => {
             sx={{ display: editOff }}
             type="button"
             aria-label="search"
+            onClick={toggleEdit}
           >
             <EditIcon />
           </IconButton>
